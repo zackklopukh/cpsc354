@@ -62,6 +62,15 @@
 \theoremstyle{remark}    
   \newtheorem{remark}[theorem]{Remark}
 
+% Set up the listing environment for Lean code
+\lstset{
+  language=lean,
+  basicstyle=\ttfamily,
+  breaklines=true,
+  frame=single,
+  captionpos=b
+}
+
 \title{CPSC-354 Report}
 \author{Zack Klopukh \\ Chapman University}
 
@@ -185,13 +194,113 @@ How can systems of algorithmic reasoning as shown in the tutorial world, based i
 
 \subsection{Week 2}
 
-(Delete:) Week 2 (and all the other weeks) should follow the same pattern as Week 1. Even if there is a week without homework, notes and comments (see above) are still expected.
+
+\subsubsection*{Homework}
+
+\textbf{Question 1:} Prove the theorem `zero\_add`: For all natural numbers \( n \), we have \( 0 + n = n \).
+
+\textbf{Proof:}
+\begin{verbatim}
+theorem zero_add : ∀ n : ℕ, 0 + n = n :=
+
+  intro n,
+  induction n with d hd,
+  rw add_zero
+  rw add_succ
+  rw hd
+  rfl
+
+This uses induction to prove the zero_add property. It is a simple way to introduce inductive reasoning.
+\end{verbatim}
+
+\textbf{Question 2:} Prove the theorem: For all natural numbers \( a, b \), we have \( \text{succ}(a) + b = \text{succ}(a + b) \).
+
+\textbf{Proof:}
+\begin{verbatim}
+induction b with a b
+rw [add_zero]
+rw [add_zero]
+rfl
+rw [add_succ]
+rw [b]
+rw [add_succ]
+rfl
+\end{verbatim}
+\end{verbatim}
+
+This proof uses induction on \( b \) to show that adding \( \text{succ}(a) \) to \( b \) results in \( \text{succ}(a + b) \). Inductive reasoning is key to establishing this property.
+\end{verbatim}
+
+\textbf{Question 3:} Prove the theorem: On the set of natural numbers, addition is commutative. In other words, if \( a \) and \( b \) are arbitrary natural numbers, then \( a + b = b + a \).
+
+\textbf{Proof:}
+\begin{verbatim}
+induction a with b hd
+rw [add_zero]
+rw [zero_add]
+rfl
+rw [add_succ]
+rw [succ_add]
+rw [succ_eq_add_one]
+rw [succ_eq_add_one]
+rw [hd]
+rfl
+\end{verbatim}
+
+This proof establishes the commutativity of addition on natural numbers by using induction on \( a \). Each step involves rewrites that simplify the equation until both sides match.
+
+\textbf{Question 4:} Prove the theorem: On the set of natural numbers, addition is associative. In other words, if \( a \), \( b \), and \( c \) are arbitrary natural numbers, we have \( (a + b) + c = a + (b + c) \).
+
+\textbf{Proof:}
+\begin{verbatim}
+induction a with b hd
+rw [zero_add]
+rw [add_comm]
+rw [zero_add]
+rfl
+rw [succ_add]
+rw [succ_add]
+rw [succ_add]
+rw [succ_eq_add_one]
+rw [succ_eq_add_one]
+rw [hd]
+rfl
+\end{verbatim}
+
+This proof uses induction on \( a \) to establish the associativity of addition on the natural numbers. Each step simplifies the expression to demonstrate that the addition operation is associative.
+
+\textbf{Question 5:} Prove the theorem: If \( a \), \( b \), and \( c \) are arbitrary natural numbers, we have \( (a + b) + c = (a + c) + b \).
+
+\textbf{Proof:}
+\begin{verbatim}
+induction a with b hd
+rw [zero_add]
+rw [zero_add]
+rw [add_comm]
+rfl
+rw [add_assoc]
+nth_rewrite 1 [add_assoc]
+nth_rewrite 2 [add_comm]
+rfl
+\end{verbatim}
+
+This proof uses induction on \( a \) to show that the expression \( (a + b) + c \) can be rearranged to \( (a + c) + b \). Various rewrite steps and the commutativity and associativity of addition are used to achieve the result.
+
+
+\subsubsection*{Comments and Questions}
+
+In this homework, I used lean to complete many proofs I've done in Discrete Mathematics including commutativity and associativity. These are proofs that I did previously use induction to solve, but representing that through lean to a computer makes the challenge extra formal, as there can be no jumps in logic. It's another week where the homework makes me thoughtful on how computers function at a lower level. \\
+
+What challenges or additional considerations might arise when using a more complicated set like the set of all real numbers compared to the set of natural numbers?
+
 
 \subsection{\ldots}
 
 \ldots
 
 \section{Lessons from the Assignments}
+
+A proposition is a data type that is built of logical systems that can be either true or false.
 
 (Delete and Replace): Write three pages about your individual contributions to the project.
 
@@ -205,6 +314,15 @@ Make sure that you use \LaTeX{} to structure your writing (eg by using subsectio
 \section{Conclusion}\label{conclusion}
 
 (Delete and Replace): (approx 400 words) A critical reflection on the content of the course. Step back from the technical details. How does the course fit into the wider world of software engineering? What did you find most interesting or useful? What improvements would you suggest?
+
+
+\subsection{Week 2}
+
+\subsubsection*{Notes}
+
+\subsubsection*{Homework}
+
+\subsubsection*{Comments and Questions}
 
 \begin{thebibliography}{99}
 \bibitem[BLA]{bla} Author, \href{https://en.wikipedia.org/wiki/LaTeX}{Title}, Publisher, Year.
