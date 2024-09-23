@@ -1,0 +1,348 @@
+\documentclass{article}
+
+\usepackage{tikz} 
+\usetikzlibrary{automata, positioning, arrows} 
+
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{parskip}
+\usepackage{hyperref}
+  \hypersetup{
+    colorlinks = true,
+    urlcolor = blue,       % color of external links using \href
+    linkcolor= blue,       % color of internal links 
+    citecolor= blue,       % color of links to bibliography
+    filecolor= blue,        % color of file links
+    }
+    
+\usepackage{listings}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=haskell,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\newtheoremstyle{theorem}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\itshape\/}  % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}         % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+\theoremstyle{theorem} 
+   \newtheorem{theorem}{Theorem}[section]
+   \newtheorem{corollary}[theorem]{Corollary}
+   \newtheorem{lemma}[theorem]{Lemma}
+   \newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+   \newtheorem{definition}[theorem]{Definition}
+   \newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}    
+  \newtheorem{remark}[theorem]{Remark}
+
+% Set up the listing environment for Lean code
+\lstset{
+  language=lean,
+  basicstyle=\ttfamily,
+  breaklines=true,
+  frame=single,
+  captionpos=b
+}
+
+\title{CPSC-354 Report}
+\author{Zack Klopukh \\ Chapman University}
+
+\date{\today} 
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Documentation of my notes, questions, and homework throughout my CPSC-354 class can be found here.
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+\section{Introduction}\label{intro}
+
+\section{Week by Week}\label{homework}
+
+\subsection{Week 1}
+
+\subsubsection*{Notes}
+
+Using proofs is important for reasoning on how computers can operate.
+
+\subsubsection*{Homework}
+
+5) Goal: $a+(b+0)+(c+0)=a+b+c$
+
+ \verb{rw [add_zero b, add_zero c]
+\\
+$a+b+c=a+b+c$ \\
+rfl
+\\
+\verb{ Here we use  add_zero to rewrite and remove the extra zeros so that both sides are equal by reflexivity.
+\\ \\
+6) Goal: $a+(b+0)+(c+0)=a+b+c$
+
+ \verb{rw [add_zero b, add_zero c]
+ \\
+ $a+b+c=a+b+c$ \\
+ rfl
+A nearly identical solution as number 5. \\
+
+7) Goal: $succ n = succ(n+0)$
+\verb{ rw [add_zero]
+\\
+rfl \\
+\verb{ Here we used add_zero to rewrite n+0 to n which was all it took to show equality through reflexivity.
+\\ \\
+8) Goal: $2+2=4$ \\
+\verb { rw [four_eq_succ_three]
+\\
+2 + 2 = succ 3 \\
+\verb. rw [three_eq_succ_two]
+\\
+2 + 2 = succ (succ 2) \\
+\verb. rw [two_eq_succ_one]
+\\
+succ 1 + succ 1 = succ (succ (succ 1)) \\
+\verb/ rw [one_eq_succ_zero]
+\\ succ (succ 0) + succ (succ 0) = succ (succ (succ (succ 0))) \\
+\verb/ rw [add_succ]
+\\ succ (succ (succ 0) + succ 0) = succ (succ (succ (succ 0))) \\
+\verb / rw [add_succ]
+\\ succ (succ (succ (succ 0) + 0)) = succ (succ (succ (succ 0))) \\
+\verb/ rw [add_zero]
+\\ succ (succ (succ (succ 0))) = succ (succ (succ (succ 0)))
+\\
+\verb / rfl
+\\
+This is the longest proof in the homework and involves multiple rewrittings to show. The process I took was turning both 2's and the 4 into their forms as successors of 0. From that point I added successors to the left side and by doing so I rewrite the two separate 2's into one large successor. Finally by using add zero, I removed one of the two left terms completely making it a single term on the left and right, both representative of 4.
+
+
+
+% Make sure that this section can be read without referring back to the homework question. Introduce the question/problem and repeat it in your own words. Make sure to typset your homework in a way that makes it clear what  the question and what the answer is. Present it as a worked example would be presented in a textbook. 
+
+% Also explain what you learn from the homework. Each homework was carefully drafted to bring home a particular teaching point. Make sure to explain what this point is. Relate it to the big questions mentioned above. 
+
+%In case you want to draw automata in Latex, you can use the tikz %package. Here is an example of a simple automaton:
+%
+%\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+%  \node[state] (q_1)   {$q_1$}; 
+%  \node[state] (q_2) [above right=of q_1] {$q_2$}; 
+%  \node[state] (q_3) [below right=of q_2] {$q_3$}; 
+%   \path[->] 
+%   (q_1) edge  node {0} (q_2)
+%         edge  node [swap] {1} (q_3)
+%   (q_2) edge  node  {1} (q_3)
+%         edge [loop above] node {0} ()
+%   (q_3) edge [loop below] node {0,1} ();
+%\end{tikzpicture}
+%
+%By the way, GPT-4 is quite good at outputting tikz code.
+
+\subsubsection*{Comments and Questions}
+
+This introduction world taught me how precise proofs need to be. I am beginning to understand how important it is to a machine that proofs are completely concrete, to the point where 2+2=4 becomes a tricky problem. As I go on to take these rewrites for granted, I will with the understanding that under the hood the computer does not go off intuition, but precise and exact steps. \\\\
+ Question of the week:
+How can systems of algorithmic reasoning as shown in the tutorial world, based in discrete mathematics, be encoded in modern programming languages?
+%I expect you to read the lecture notes. 
+
+\subsection{Week 2}
+
+
+\subsubsection*{Homework}
+
+\textbf{Question 1:} Prove the theorem `zero\_add`: For all natural numbers \( n \), we have \( 0 + n = n \).
+
+\textbf{Proof:}
+\begin{verbatim}
+theorem zero_add : ∀ n : ℕ, 0 + n = n :=
+
+  intro n,
+  induction n with d hd,
+  rw add_zero
+  rw add_succ
+  rw hd
+  rfl
+
+This uses induction to prove the zero_add property. It is a simple way to introduce inductive reasoning.
+\end{verbatim}
+
+\textbf{Question 2:} Prove the theorem: For all natural numbers \( a, b \), we have \( \text{succ}(a) + b = \text{succ}(a + b) \).
+
+\textbf{Proof:}
+\begin{verbatim}
+induction b with a b
+rw [add_zero]
+rw [add_zero]
+rfl
+rw [add_succ]
+rw [b]
+rw [add_succ]
+rfl
+\end{verbatim}
+\end{verbatim}
+
+This proof uses induction on \( b \) to show that adding \( \text{succ}(a) \) to \( b \) results in \( \text{succ}(a + b) \). Inductive reasoning is key to establishing this property.
+\end{verbatim}
+
+\textbf{Question 3:} Prove the theorem: On the set of natural numbers, addition is commutative. In other words, if \( a \) and \( b \) are arbitrary natural numbers, then \( a + b = b + a \).
+
+\textbf{Proof:}
+\begin{verbatim}
+induction a with b hd
+rw [add_zero]
+rw [zero_add]
+rfl
+rw [add_succ]
+rw [succ_add]
+rw [succ_eq_add_one]
+rw [succ_eq_add_one]
+rw [hd]
+rfl
+\end{verbatim}
+
+This proof establishes the commutativity of addition on natural numbers by using induction on \( a \). Each step involves rewrites that simplify the equation until both sides match.
+
+\textbf{Question 4:} Prove the theorem: On the set of natural numbers, addition is associative. In other words, if \( a \), \( b \), and \( c \) are arbitrary natural numbers, we have \( (a + b) + c = a + (b + c) \).
+
+\textbf{Proof:}
+\begin{verbatim}
+induction a with b hd
+rw [zero_add]
+rw [add_comm]
+rw [zero_add]
+rfl
+rw [succ_add]
+rw [succ_add]
+rw [succ_add]
+rw [succ_eq_add_one]
+rw [succ_eq_add_one]
+rw [hd]
+rfl
+\end{verbatim}
+
+This proof uses induction on \( a \) to establish the associativity of addition on the natural numbers. Each step simplifies the expression to demonstrate that the addition operation is associative.
+
+\textbf{Question 5:} Prove the theorem: If \( a \), \( b \), and \( c \) are arbitrary natural numbers, we have \( (a + b) + c = (a + c) + b \).
+
+\textbf{Proof:}
+\begin{verbatim}
+induction a with b hd
+rw [zero_add]
+rw [zero_add]
+rw [add_comm]
+rfl
+rw [add_assoc]
+nth_rewrite 1 [add_assoc]
+nth_rewrite 2 [add_comm]
+rfl
+\end{verbatim}
+
+This proof uses induction on \( a \) to show that the expression \( (a + b) + c \) can be rearranged to \( (a + c) + b \). Various rewrite steps and the commutativity and associativity of addition are used to achieve the result.
+
+
+\subsubsection*{Comments and Questions}
+
+In this homework, I used lean to complete many proofs I've done in Discrete Mathematics including commutativity and associativity. These are proofs that I did previously use induction to solve, but representing that through lean to a computer makes the challenge extra formal, as there can be no jumps in logic. It's another week where the homework makes me thoughtful on how computers function at a lower level. \\
+
+What challenges or additional considerations might arise when using a more complicated set like the set of all real numbers compared to the set of natural numbers?
+
+\subsection{Week 3}
+
+\subsubsection*{Homework}
+
+
+This week, I used a Large Language Model (LLM) to delve deeply into a research question that piqued my interest. Beyond obtaining basic answers, I further explored the advancements this topic has facilitated in various fields, as these developments are of particular interest to me.
+
+What role does syntax play in the usability of programming languages? \\
+For a comprehensive report detailing my research and findings, please refer to the following link: \\
+\url{https://github.com/zackklopukh/LLMReport/blob/main/README.md}
+
+\subsubsection*{Discord Posting}
+
+In my literature review with GPT-4o, I examined the profound influence of user-friendly interfaces on programming languages. Initially, programming was confined to those with deep technical knowledge due to complex syntax and low-level languages. However, the evolution of programming syntax to more readable and high-level languages significantly broadened access to programming, inviting individuals from diverse fields to contribute and innovate. The shift from assembly languages to high-level languages such as FORTRAN, COBOL, and later Python and JavaScript revolutionized the field. This transition facilitated increased creativity and productivity, as developers could focus more on solving problems rather than managing low-level details. The development of high-level languages enabled rapid software development, democratizing programming and spurring advancements across various domains. In the report with GPT-4o, I explored how modern hybrid systems combine interpreted and compiled code to enhance performance and flexibility. Techniques like Just-In-Time (JIT) compilation and the integration of high-level languages with systems like WebAssembly illustrate the ongoing evolution of programming. These advancements reflect the growing synergy between user-friendly interfaces and robust performance, continuing to shape the future of programming.
+\url{https://github.com/zackklopukh/LLMReport/blob/main/README.md}
+
+\subsection{Week 4}
+
+\subsubsection*{Homework}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.22.39 PM.png}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.23.10 PM.png}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.23.22 PM.png}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.23.36 PM.png}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.23.51 PM.png}
+\label{fig:enter-label}
+\end{figure}
+
+\subsubsection*{Comments and Questions}
+
+How do different parsing strategies compare when evaluating factors such as speed or memory usage?
+
+Comparing a few different parsing strategies. Top-down recursive parsing may be slower if backtracking is required but it is very data efficient. Bottom-up can be faster especially for deterministic grammars although in some cases could use more memory in the case of more complex grammar. Packrat parsing is also very fast as it doesn't require any backtracking, but storing the intermediate results will require extra memory.
+
+
+\subsection{\ldots}
+
+\ldots
+
+\section{Lessons from the Assignments}
+
+Write this section during the semester. This is approximately a quarter of apage per week and the material should come from the work you do anyway. Just keep your eyes open for interesting lessons.
+
+Make sure that you use \LaTeX{} to structure your writing (eg by using subsections).
+
+\section{Conclusion}\label{conclusion}
+
+Soon to be.
+
+\begin{thebibliography}{99}
+\bibitem[BLA]{bla} Author, \href{https://en.wikipedia.org/wiki/LaTeX}{Title}, Publisher, Year.
+\end{thebibliography}
+
+\end{document}
