@@ -6,6 +6,7 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{float}
 \usepackage{amssymb}
 \usepackage{fullpage}
 \usepackage{color}
@@ -81,31 +82,11 @@
 \maketitle
 
 \begin{abstract}
-(Delete and Replace:) You can safely delete and replace the explanations in this file as they will remain available on the course website. For example, you should replace this abstract with your own. The abstract should be a short summary of the report. It should be written in a way that makes it possible to understand the purpose of the report without reading it.  
-\end{abstract}
-
+Documentation of my notes, questions, and homework throughout my CPSC-354 class can be found here.
 \setcounter{tocdepth}{3}
 \tableofcontents
 
 \section{Introduction}\label{intro}
-
-(Delete and Replace): This report will document your learning throughout the course. It will be a collection of your notes, homework solutions, and critical reflections on the content of the course. Something in between a semester-long take home exam and your own lecture notes.\footnote{One purpose of giving the report the form of lecture notes is that self-explanation is a technique proven to help with learning, see Chapter 6 of Craig Barton, How I Wish I'd Taught Maths, and references therein. In fact, the report can lead you from self-explanation (which is what you do for the weekly deadline) to explaining to others (which is what you do for the final submission). Another purpose is to help those of you who want to go on to graduate school to develop some basic writing skills. A report that you could proudly add to your application to graduate school (or a job application in industry) would give you full points.}
-
-
-
-The full report is due at the end of the finals week. It will be graded according to the following guidelines.
-
-Grading  guidelines (see also below):
-\begin{itemize}
-\item Is typesetting and layout professional? 
-\item Is the technical content, in particular the homework, correct?
-\item Did the student find interesting references~\cite{bla} and cites them throughout the report?
-\item Do the notes reflect understanding and critical thinking?
-\item Does the report contain material related to but going beyond what we do in class?
-\item Are the questions interesting?
-\end{itemize}
-
-Do not change the template (fontsize, width of margin, spacing of lines, etc) without asking your first.
 
 \section{Week by Week}\label{homework}
 
@@ -293,6 +274,58 @@ In this homework, I used lean to complete many proofs I've done in Discrete Math
 
 What challenges or additional considerations might arise when using a more complicated set like the set of all real numbers compared to the set of natural numbers?
 
+\subsection{Week 3}
+
+\subsubsection*{Homework}
+
+
+This week, I used a Large Language Model (LLM) to delve deeply into a research question that piqued my interest. Beyond obtaining basic answers, I further explored the advancements this topic has facilitated in various fields, as these developments are of particular interest to me.
+
+What role does syntax play in the usability of programming languages? \\
+For a comprehensive report detailing my research and findings, please refer to the following link: \\
+\url{https://github.com/zackklopukh/LLMReport/blob/main/README.md}
+
+\subsubsection*{Discord Posting}
+
+In my literature review with GPT-4o, I examined the profound influence of user-friendly interfaces on programming languages. Initially, programming was confined to those with deep technical knowledge due to complex syntax and low-level languages. However, the evolution of programming syntax to more readable and high-level languages significantly broadened access to programming, inviting individuals from diverse fields to contribute and innovate. The shift from assembly languages to high-level languages such as FORTRAN, COBOL, and later Python and JavaScript revolutionized the field. This transition facilitated increased creativity and productivity, as developers could focus more on solving problems rather than managing low-level details. The development of high-level languages enabled rapid software development, democratizing programming and spurring advancements across various domains. In the report with GPT-4o, I explored how modern hybrid systems combine interpreted and compiled code to enhance performance and flexibility. Techniques like Just-In-Time (JIT) compilation and the integration of high-level languages with systems like WebAssembly illustrate the ongoing evolution of programming. These advancements reflect the growing synergy between user-friendly interfaces and robust performance, continuing to shape the future of programming.
+\url{https://github.com/zackklopukh/LLMReport/blob/main/README.md}
+
+\subsection{Week 4}
+
+\subsubsection*{Homework}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.22.39 PM.png}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.23.10 PM.png}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.23.22 PM.png}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.23.36 PM.png}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-09-22 at 10.23.51 PM.png}
+\label{fig:enter-label}
+\end{figure}
+
+\subsubsection*{Comments and Questions}
+
+How do different parsing strategies compare when evaluating factors such as speed or memory usage?
+
+Comparing a few different parsing strategies. Top-down recursive parsing may be slower if backtracking is required but it is very data efficient. Bottom-up can be faster especially for deterministic grammars although in some cases could use more memory in the case of more complex grammar. Packrat parsing is also very fast as it doesn't require any backtracking, but storing the intermediate results will require extra memory.
+
 
 \subsection{\ldots}
 
@@ -300,29 +333,13 @@ What challenges or additional considerations might arise when using a more compl
 
 \section{Lessons from the Assignments}
 
-A proposition is a data type that is built of logical systems that can be either true or false.
-
-(Delete and Replace): Write three pages about your individual contributions to the project.
-
-On 3 pages you describe lessons you learned from the project. Be as technical and detailed as possible. Particularly valuable are \emph{interesting} examples where you connect concrete technical details with \emph{interesting} general observations or where the theory discussed in the lectures helped with the design or implementation of the project.
-
-
 Write this section during the semester. This is approximately a quarter of apage per week and the material should come from the work you do anyway. Just keep your eyes open for interesting lessons.
 
 Make sure that you use \LaTeX{} to structure your writing (eg by using subsections).
 
 \section{Conclusion}\label{conclusion}
 
-(Delete and Replace): (approx 400 words) A critical reflection on the content of the course. Step back from the technical details. How does the course fit into the wider world of software engineering? What did you find most interesting or useful? What improvements would you suggest?
-
-
-\subsection{Week 2}
-
-\subsubsection*{Notes}
-
-\subsubsection*{Homework}
-
-\subsubsection*{Comments and Questions}
+Soon to be.
 
 \begin{thebibliography}{99}
 \bibitem[BLA]{bla} Author, \href{https://en.wikipedia.org/wiki/LaTeX}{Title}, Publisher, Year.
