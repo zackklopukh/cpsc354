@@ -326,6 +326,39 @@ How do different parsing strategies compare when evaluating factors such as spee
 
 Comparing a few different parsing strategies. Top-down recursive parsing may be slower if backtracking is required but it is very data efficient. Bottom-up can be faster especially for deterministic grammars although in some cases could use more memory in the case of more complex grammar. Packrat parsing is also very fast as it doesn't require any backtracking, but storing the intermediate results will require extra memory.
 
+\subsection{Week 5}
+
+\subsubsection*{Homework}
+
+1. Exhibit evidence that you're planning a party.\\
+\texttt{exact todo\_list}
+
+2. Fill a box, label correctly.\\
+\texttt{exact and\_intro p s}
+
+3. Three x and\_intro.\\
+\texttt{exact and\_intro (and\_intro a i) (and\_intro o u)}
+
+4. Exhibit evidence that Pippin is coming to the party.\\
+\texttt{exact and\_left vm}
+
+5. Both P and Q entails just Q as well!\\
+\texttt{exact h.right}
+
+6. and\_intro, and\_left, and\_right.\\
+\texttt{exact and\_intro (and\_left h1) (and\_right h2)}
+
+7. Navigate the tree.\\
+\texttt{exact h.left.left.right}
+
+8. Take apart and build evidence.\\
+\texttt{exact (h.left.right, h.right.right.left.left, h.left.left.left, h.left.left.right)}
+
+\subsubsection*{Comments and Questions}
+
+How do the conjunction and disjunction propositions seen in LLG influence the design of type systems in developed programming languages?
+
+GPT: The conjunction (AND) and disjunction (OR) propositions from LLG significantly influence the design of type systems in programming languages by enabling type composition and enhancing type safety. Conjunctions correspond to product types (like tuples), allowing for complex data structures, while disjunctions relate to sum types (like variants), enabling flexible return types. These logical constructs facilitate pattern matching and support formal verification, ensuring that programs adhere to their specifications and reducing runtime errors. Overall, they provide a robust foundation for creating expressive and reliable type systems in modern programming languages.
 
 \subsection{\ldots}
 
