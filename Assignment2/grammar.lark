@@ -1,0 +1,15 @@
+start: sum
+?sum: product
+    | sum "+" product -> plus
+    | sum "-" product -> minus
+?product: atom
+    | product "*" atom -> times
+    | product "/" atom -> divide
+?atom: NUMBER -> num
+     | "-" atom -> neg
+     | "(" sum ")"
+     | "log" atom "base" atom -> log
+     | atom "^" atom -> power
+%import common.NUMBER
+%import common.WS
+%ignore WS
