@@ -360,6 +360,41 @@ How do the conjunction and disjunction propositions seen in LLG influence the de
 
 GPT: The conjunction (AND) and disjunction (OR) propositions from LLG significantly influence the design of type systems in programming languages by enabling type composition and enhancing type safety. Conjunctions correspond to product types (like tuples), allowing for complex data structures, while disjunctions relate to sum types (like variants), enabling flexible return types. These logical constructs facilitate pattern matching and support formal verification, ensuring that programs adhere to their specifications and reducing runtime errors. Overall, they provide a robust foundation for creating expressive and reliable type systems in modern programming languages.
 
+\subsection{Week 6}
+
+\subsubsection*{Homework}
+
+1. Exhibit evidence that cake will be delivered to the party.\\
+\texttt{exact bakery\_service p}
+
+2. Cake is Cake.\\
+\texttt{exact \lambda h : C \to h}
+
+3. Show that \(^\) is commutative.\\
+\texttt{exact \lambda h : I \land S \to \text{and\_intro}(h.right, h.left)}
+
+4. Show that \(\to\) is transitive.\\
+\texttt{exact \lambda h : c \to h2 (h1 h)}
+
+5. Riffin is bringing a unicorn snack.\\
+\texttt{exact h5 (h1 p)}
+
+6. Conjunction interacting with implication.\\
+\texttt{exact \lambda c : C \to \lambda d : D \to h (c,d)}
+
+7. Conjunction interacting with interaction.\\
+\texttt{exact \lambda c\_and\_d : C \land D \to h \, c\_and\_d.left \, c\_and\_d.right}
+
+8. \(\to\) distributes over \(\land\).\\
+\texttt{exact \lambda s : S \to (h.left s, h.right s)}
+
+9. Write the necessary nested function(s)!\\
+\texttt{exact \lambda r : R \, (\lambda s : S \to r, \lambda ns : -S \to r)}
+
+\subsubsection*{Comments and Questions}
+
+How do the conjunction and disjunction propositions seen in LLG influence the design of type systems in developed programming languages?
+
 \subsection{\ldots}
 
 \ldots
