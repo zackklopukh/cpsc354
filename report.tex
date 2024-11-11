@@ -395,6 +395,290 @@ GPT: The conjunction (AND) and disjunction (OR) propositions from LLG significan
 
 How do the conjunction and disjunction propositions seen in LLG influence the design of type systems in developed programming languages?
 
+\subsection{Week 8-10}
+
+
+\subsection*{Notes}
+In recursive evaluations, such as those found in lambda calculus interpreters, it is crucial to understand the recursive structure and how the evaluation proceeds through function calls and returns. When evaluating lambda expressions, each function call may invoke further recursive calls to process sub-expressions, such as applications or lambda abstractions, and these calls deepen the recursion. 
+
+As the interpreter encounters applications, it needs to evaluate both the function and the argument, which leads to deeper recursive invocations of the \texttt{evaluate()} function. This recursive descent continues until a terminal case, such as a variable or fully reduced lambda expression, is reached. At this point, the interpreter begins to return from these calls, completing substitutions or reductions in reverse order of the calls. This is why the trace of recursive calls often shows numbers going up as the recursion deepens and going down as the interpreter returns to earlier points in the code. 
+
+Understanding this pattern is key to grasping the operational semantics of lambda calculus interpreters and similar recursive evaluation strategies in programming languages.
+\subsubsection*{Homework}
+
+\subsection*{Question 2}
+In this question, we simplify the expression \( a \, b \, c \, d \) step-by-step and show how the left-associative function application works in lambda calculus.
+
+This is interpreted as:
+\[
+a \, b \, c \, d = (((a \, b) \, c) \, d)
+\]
+
+\paragraph{Explanation:}
+\begin{itemize}
+    \item \textbf{Left-Associative Application:} Function application in lambda calculus is left-associative, meaning it groups from the left.
+    \item \textbf{Step-by-Step Grouping:}
+    \begin{align*}
+        1. & \quad \text{Apply } a \text{ to } b: \quad (a \, b) \\
+        2. & \quad \text{Then, apply the result to } c: \quad ((a \, b) \, c) \\
+        3. & \quad \text{Finally, apply that result to } d: \quad (((a \, b) \, c) \, d)
+    \end{align*}
+\end{itemize}
+
+Therefore, the original expression simplifies to:
+\[
+a \, b \, c \, d = (((a \, b) \, c) \, d)
+\]
+
+\subsection*{Question 3: Capture-Avoiding Substitution}
+Capture-avoiding substitution is a technique in lambda calculus used to replace variables in expressions while ensuring that no variable names are inadvertently "captured" during the substitution process. 
+
+\paragraph{Explanation:}
+The potential issue arises when a bound variable in a lambda expression shares the same name as a free variable in the term being substituted. To avoid this, a process called "renaming" or "alpha-conversion" is applied, where bound variables are renamed to fresh variables before substitution, preventing clashes. This ensures that the substitution respects the scope of each variable.
+
+\subsection*{Question 4: Do all computations reduce to normal form?}
+Not all lambda calculus expressions reduce to normal form. While some expressions, such as those representing arithmetic operations or simple functions, will eventually reduce to a normal form (a fully evaluated state), others may not.
+
+\paragraph{Explanation:}
+Expressions that do not reduce to normal form often arise due to infinite loops or recursive definitions. A classic example is the "omega" combinator, which leads to infinite self-application without ever reaching a normal form. 
+
+\subsection*{Question 5: The Smallest Lambda Expression That Does Not Reduce to Normal Form}
+The smallest lambda expression that does not reduce to normal form is the omega combinator. This expression essentially calls itself in an infinite loop, continuously reapplying the function to itself without any base case to terminate the recursion.
+
+\paragraph{Explanation:}
+This minimal working example (MWE) illustrates the issue of non-termination, where the lambda expression keeps expanding rather than simplifying. The omega combinator is a foundational concept in understanding recursion and non-termination within the theoretical framework of lambda calculus.
+
+\subsection*{Question 7: Evaluating \( ((\lambda m. \lambda n. m \, n) \, (\lambda f. \lambda x. f \, (f \, x))) \, (\lambda f. \lambda x. f \, (f \, (f \, x))) \)}
+1. Apply the first function \( \lambda m. \lambda n. m \, n \) to \( \lambda f. \lambda x. f \, (f \, x) \):
+   \[
+   (\lambda n.(\lambda f.\lambda x.f \, (f \, x)) \, n) \, (\lambda f.\lambda x.f \, (f \, (f \, x)))
+   \]
+2. Substitute \( n = \lambda f.\lambda x.f \, (f \, (f \, x)) \):
+   \[
+   (\lambda f.\lambda x.f \, (f \, x)) \, (\lambda f.\lambda x.f \, (f \, (f \, x)))
+   \]
+3. After substitutions and simplifications, the final result is:
+   \[
+   \lambda x. f \, (f \, (f \, x))
+   \]
+
+\subsection*{Question 8: Tracing Recursive Calls to \texttt{evaluate()} with \( ((\lambda m.\lambda n.m \, n) \, (\lambda f.\lambda x.f \, (f \, x))) \, (\lambda f.\lambda x.f \, x) \)}
+Below is the trace, with line numbers and indentation representing the recursion depth:
+\begin{verbatim}
+12: eval (((\m.(\n.(m n))) (\f.(\x.(f (f x))))) (\f.(\x.(f x))))
+    39: eval ((\m.(\n.(m n))) (\f.(\x.(f (f x)))))
+        39: eval (\m.(\n.(m n)))
+        39: eval (\f.(\x.(f (f x))))
+    53: substitute (\n.(m n)) [m -> \f.\x.(f (f x))]
+    12: eval (\n.(\f.\x.(f (f x)) n))
+\end{verbatim}
+
+\subsection*{Comments and Questions}
+How does the use of functional representations in lambda calculus, such as Church numerals for encoding natural numbers, influence our understanding of data abstraction and manipulation in modern programming languages?
+
+
+\subsection{Week 11}
+
+  \subsubsection*{Homework}
+  \textbf{Question:}
+
+  For each of the possible combinations of the properties confluent (\( C \)), terminating (\( T \)), and having unique normal forms (\( UNF \)), determine whether such an ARS exists. Provide an example if possible, or explain why it cannot exist. For the examples, draw the ARS diagrams.
+
+  \begin{center}
+    \begin{tabular}{|c|c|c|l|}
+      \hline
+      Confluent (\( C \)) & Terminating (\( T \)) & Unique Normal Forms (\( UNF \)) & Example \\
+      \hline
+      True & True & True & Yes \\
+      True & True & False & No \\
+      True & False & True & Yes \\
+      True & False & False & Yes \\
+      False & True & True & No \\
+      False & True & False & Yes \\
+      False & False & True & No \\
+      False & False & False & Yes \\
+      \hline
+    \end{tabular}
+  \end{center}
+
+  \textbf{Answer:}
+
+  \textbf{1. Confluent: True, Terminating: True, Unique Normal Forms: True}
+
+  \textit{Example:}
+
+  Consider the ARS with elements \( S = \{ a, b, c \} \) and reduction rules:
+
+  \[
+    a \to b, \quad b \to c
+  \]
+
+  \textit{Diagram:}
+
+  \begin{center}
+    \begin{tikzpicture}[node distance=2cm, ->, >=stealth, auto]
+      \node (A) {\( a \)};
+      \node (B) [right of=A] {\( b \)};
+      \node (C) [right of=B] {\( c \)};
+      \draw (A) to (B);
+      \draw (B) to (C);
+    \end{tikzpicture}
+  \end{center}
+
+  \textit{Analysis:}
+
+  - \textbf{Terminating:} Yes. All reduction sequences eventually reach \( c \), which is a normal form.
+  - \textbf{Confluent:} Yes. There are no diverging reduction paths.
+  - \textbf{Unique Normal Forms:} Yes. Every element reduces to \( c \), the unique normal form.
+
+  ---
+
+  \textbf{2. Confluent: True, Terminating: True, Unique Normal Forms: False}
+
+  \textit{Explanation:}
+
+  This combination is \textbf{impossible}. In a confluent and terminating ARS, every element reduces to a unique normal form. Therefore, unique normal forms must exist.
+
+  ---
+
+  \textbf{3. Confluent: True, Terminating: False, Unique Normal Forms: True}
+
+  \textit{Example:}
+
+  Consider the ARS with elements \( S = \{ a, b, c \} \) and rules:
+
+  \[
+    a \to b, \quad b \to a, \quad a \to c, \quad b \to c
+  \]
+
+  \textit{Diagram:}
+
+  \begin{center}
+    \begin{tikzpicture}[node distance=2cm, ->, >=stealth, auto]
+      \node (A) {\( a \)};
+      \node (B) [right of=A] {\( b \)};
+      \node (C) [below of=A, node distance=1.5cm] {\( c \)};
+      \draw (A) to (B);
+      \draw (B) to (A);
+      \draw (A) to (C);
+      \draw (B) to (C);
+    \end{tikzpicture}
+  \end{center}
+
+  \textit{Analysis:}
+
+  - \textbf{Terminating:} No. There is an infinite loop between \( a \) and \( b \): \( a \to b \to a \to b \to \dots \)
+  - \textbf{Confluent:} Yes. Both \( a \) and \( b \) reduce to \( c \), and any divergent paths converge at \( c \).
+  - \textbf{Unique Normal Forms:} Yes. All elements reduce to \( c \), the unique normal form.
+
+  ---
+
+  \textbf{4. Confluent: True, Terminating: False, Unique Normal Forms: False}
+
+  \textit{Example:}
+
+  Consider the ARS with elements \( S = \{ a, b \} \) and rules:
+
+  \[
+    a \to b, \quad b \to a
+  \]
+
+  \textit{Diagram:}
+
+  \begin{center}
+    \begin{tikzpicture}[node distance=2cm, ->, >=stealth, auto]
+      \node (A) {\( a \)};
+      \node (B) [right of=A] {\( b \)};
+      \draw (A) to (B);
+      \draw (B) to (A);
+    \end{tikzpicture}
+  \end{center}
+
+  \textit{Analysis:}
+
+  - \textbf{Terminating:} No. There is an infinite loop between \( a \) and \( b \).
+  - \textbf{Confluent:} Yes. There are no diverging paths; the reductions cycle between \( a \) and \( b \).
+  - \textbf{Unique Normal Forms:} No. Neither \( a \) nor \( b \) is a normal form (both can reduce further), and there are no normal forms in \( S \).
+
+  ---
+
+  \textbf{5. Confluent: False, Terminating: True, Unique Normal Forms: True}
+
+  \textit{Explanation:}
+
+  This combination is \textbf{impossible}. If an ARS has unique normal forms, it must be confluent.
+
+  ---
+
+  \textbf{6. Confluent: False, Terminating: True, Unique Normal Forms: False}
+
+  \textit{Example:}
+
+  Consider the ARS with elements \( S = \{ a, b, c \} \) and rules:
+
+  \[
+    a \to b, \quad a \to c
+  \]
+
+  \textit{Diagram:}
+
+  \begin{center}
+    \begin{tikzpicture}[->, >=stealth, auto]
+      \node (A) at (0,0) {\( a \)};
+      \node (B) at (2,1) {\( b \)};
+      \node (C) at (2,-1) {\( c \)};
+      \draw (A) to (B);
+      \draw (A) to (C);
+    \end{tikzpicture}
+  \end{center}
+
+  \textit{Analysis:}
+
+  - \textbf{Terminating:} Yes. Reductions terminate at \( b \) or \( c \), which are normal forms.
+  - \textbf{Confluent:} No. From \( a \), we can reach two different normal forms, \( b \) and \( c \), which are not joinable.
+  - \textbf{Unique Normal Forms:} No. The element \( a \) has two distinct normal forms.
+
+  ---
+
+  \textbf{7. Confluent: False, Terminating: False, Unique Normal Forms: True}
+
+  \textit{Explanation:}
+
+  This combination is \textbf{impossible}. Unique normal forms imply that the ARS is confluent and normalising.
+
+  ---
+
+  \textbf{8. Confluent: False, Terminating: False, Unique Normal Forms: False}
+
+  \textit{Example:}
+
+  Consider the ARS with elements \( S = \{ a, b, c \} \) and rules:
+
+  \[
+    a \to b, \quad b \to a, \quad a \to c
+  \]
+
+  \textit{Diagram:}
+
+  \begin{center}
+    \begin{tikzpicture}[->, >=stealth, auto]
+      \node (A) at (0,1) {\( a \)};
+      \node (B) at (2,1) {\( b \)};
+      \node (C) at (1,0) {\( c \)};
+      \draw (A) to (B);
+      \draw (B) to (A);
+      \draw (A) to (C);
+    \end{tikzpicture}
+  \end{center}
+
+  \textit{Analysis:}
+
+  - \textbf{Terminating:} No. There is an infinite loop between \( a \) and \( b \).
+  - \textbf{Confluent:} No. From \( a \), we can either loop indefinitely between \( a \) and \( b \), or reduce to \( c \).
+  - \textbf{Unique Normal Forms:} No. \( c \) is a normal form reachable from \( a \), but \( b \) and \( a \) do not reduce to \( c \) if we stay in the loop.
+
+
+
 \subsection{\ldots}
 
 \ldots
