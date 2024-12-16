@@ -82,7 +82,9 @@
 \maketitle
 
 \begin{abstract}
-Documentation of my notes, questions, and homework throughout my CPSC-354 class can be found here.
+This report provides a comprehensive compilation of notes, homework solutions, and reflections for the CPSC-354 class at Chapman University. The document highlights foundational concepts in formal proofs, arithmetic reasoning, and logical operations essential for understanding computer systems' behavior. Each section offers step-by-step solutions to problems, emphasizing the importance of rewriting techniques, reflexivity, and successor-based arithmetic. The report serves as both a study aid and a demonstration of the progressive understanding achieved during the course.
+\end{abstract}
+
 \setcounter{tocdepth}{3}
 \tableofcontents
 
@@ -754,7 +756,7 @@ The ARS does not terminate due to cyclic rewrites between \( ab \) and \( ba \).
 The system has two equivalence classes, which can be characterized by whether the string length is even or odd after applying reductions.
 
 To make the ARS terminating, modify the rule \( aa \to \epsilon \) to \( aa \to a \) and restrict cycling behavior.
-\subsection*{Comments and Questions}
+\subsection*21{Comments and Questions}
 How can we systematically determine whether a given set of rewrite rules leads to an infinite sequence of rewrites, especially when dealing with large alphabets or complex rules?
 \subsection{\ldots}
 
@@ -764,14 +766,144 @@ How can we systematically determine whether a given set of rewrite rules leads t
 
 Write this section during the semester. This is approximately a quarter of apage per week and the material should come from the work you do anyway. Just keep your eyes open for interesting lessons.
 
-Make sure that you use \LaTeX{} to structure your writing (eg by using subsections).
+\subsection{Week 13}
 
-\section{Conclusion}\label{conclusion}
+\section*{Notes}
+In this computation, we applied the following rules repeatedly:
+\begin{itemize}
+    \item Definition of \textbf{let rec} to expand recursive functions.
+    \item Definition of \textbf{fix} to unfold the fixed-point combinator.
+    \item \textbf{Beta reduction} for substituting arguments into lambda functions.
+    \item \textbf{Definition of if} to evaluate conditional expressions.
+    \item Arithmetic simplifications for multiplication.
+\end{itemize}
 
-Soon to be.
+\section*{Exercise: Factorial Computation with Fix}
+We compute $\text{fact}~3$ step-by-step following the given computation rules. 
+
+\begin{enumerate}
+    \item \textbf{Given:}
+    \begin{lstlisting}
+    let rec fact = \n. if n = 0 then 1 else n * fact (n - 1) in fact 3
+    \end{lstlisting}
+
+    \item \textbf{Definition of let rec:}
+    \[
+    \text{let rec f = e}_1~\text{in}~e_2 \rightarrow \text{let f = (fix (\lambda f. e}_1)) \text{ in e}_2
+    \]
+    Applying this rule:
+    \begin{lstlisting}
+    let fact = (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) in fact 3
+    \end{lstlisting}
+
+    \item \textbf{Definition of let:}
+    \[
+    \text{let x = e}_1~\text{in}~e_2 \rightarrow (\lambda x. e_2)~e_1
+    \]
+    Applying this rule:
+    \begin{lstlisting}
+    (\fact. fact 3) (fix (\f. \n. if n = 0 then 1 else n * f (n - 1)))
+    \end{lstlisting}
+
+    \item \textbf{Beta reduction:}
+    Substitute $\text{fix (\lambda f. \dots)}$ for $\text{fact}$:
+    \begin{lstlisting}
+    (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) 3
+    \end{lstlisting}
+
+    \item \textbf{Definition of fix:}
+    \[
+    \text{fix F} \rightarrow F (\text{fix F})
+    \]
+    Applying this rule:
+    \begin{lstlisting}
+    (\n. if n = 0 then 1 else n * (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) (n - 1)) 3
+    \end{lstlisting}
+
+    \item \textbf{Beta reduction:} Substitute $3$ for $n$:
+    \begin{lstlisting}
+    if 3 = 0 then 1 else 3 * (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) (3 - 1)
+    \end{lstlisting}
+
+    \item \textbf{Definition of if:} Since $3 = 0$ is false:
+    \begin{lstlisting}
+    3 * (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) 2
+    \end{lstlisting}
+
+    \item Repeat the process for $2$:
+    \begin{lstlisting}
+    3 * (if 2 = 0 then 1 else 2 * (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) (2 - 1))
+    \end{lstlisting}
+    Definition of if (2 = 0 is false):
+    \begin{lstlisting}
+    3 * 2 * (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) 1
+    \end{lstlisting}
+
+    \item Repeat for $1$:
+    \begin{lstlisting}
+    3 * 2 * (if 1 = 0 then 1 else 1 * (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) (1 - 1))
+    \end{lstlisting}
+    Definition of if (1 = 0 is false):
+    \begin{lstlisting}
+    3 * 2 * 1 * (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) 0
+    \end{lstlisting}
+
+    \item Repeat for $0$:
+    \begin{lstlisting}
+    3 * 2 * 1 * (if 0 = 0 then 1 else 0 * (fix (\f. \n. if n = 0 then 1 else n * f (n - 1))) (0 - 1))
+    \end{lstlisting}
+    Definition of if (0 = 0 is true):
+    \begin{lstlisting}
+    3 * 2 * 1 * 1
+    \end{lstlisting}
+
+    \item Simplify:
+    \[
+    3 * 2 * 1 * 1 = 6
+    \]
+
+\end{enumerate}
+
+The final result of $\text{fact}~3$ is $6$, as expected.
+
+\subsection*{Questions and Comments}
+Question:
+Explain why the fixed-point combinator (fix) is essential for defining the factorial function in a language without explicit recursion. How does the application of fix enable recursive behavior in the absence of syntactic constructs like let rec? Use the steps from the computation of fact 3 to justify your answer.
+
+
+
+\section{Lessons from the Group Assignments and Project}
+\label{group_lessons}
+
+\subsection{Individual Contributions and Technical Insights}
+
+Throughout the semester, I contributed significantly to the group assignments and projects, particularly in designing and implementing key components of our interpreters. My primary focus was on integrating theoretical concepts from lectures into practical, functioning code.
+
+For Assignment 2, I played a major role in the parsing module, where we converted lambda expressions into Abstract Syntax Trees (ASTs). By leveraging context-free grammars (CFGs) and recursive descent parsing, I ensured the program could accurately represent nested lambda terms. An interesting challenge arose with ambiguous expressions, requiring precise implementation of parentheses handling and operator precedence, directly applying the theory discussed in class.
+
+In Assignment 3, I worked on designing and automating test cases. Using Python's unittest library, I created robust test suites that validated corner cases, such as deeply nested lambda terms and incorrect input formatting. I observed that this systematic testing process not only ensured reliability but also improved our debugging efficiency. This reinforced the lecture emphasis on the importance of incremental development and test-driven programming practices.
+
+For Assignment 4, I contributed to extending the interpreter to support arithmetic operations and recursion. A significant technical achievement was implementing the fix operator to enable recursive definitions. To design this, I applied the theory of fixed-point combinators, which we discussed in class, allowing us to evaluate recursive functions without native language support. This feature was particularly insightful as it demonstrated how theoretical concepts like fixed-points could solve real-world implementation problems.
+
+\subsection{Collaborative Dynamics and Key Observations}
+
+Working in a group allowed us to distribute tasks efficiently while learning from each other’s approaches. For example, one team member specialized in handling substitution operations, and I collaborated with them to optimize the substitution logic to reduce redundant computations. This collaborative debugging experience deepened my understanding of trade-offs in computational efficiency.
+
+The projects also highlighted how theoretical and practical programming knowledge complement each other. For instance, designing list manipulation operations in Assignment 4 required understanding lambda calculus concepts such as Church encodings, which directly mapped into concrete Python implementations.
+
+\subsection{Conclusion}
+
+My individual contributions to the group assignments spanned critical technical components such as parsing, testing, and implementing advanced features like recursion and arithmetic. These experiences emphasized the importance of bridging theoretical insights with practical programming techniques. Moreover, the collaborative nature of the projects reinforced key lessons in problem-solving, efficiency, and modular design.
+
+\section{Conclusion}
+\label{conclusion}
+
+In this report, we explored key principles of logical reasoning, proof-based problem-solving, and arithmetic operations through systematic approaches. By leveraging concepts such as reflexivity, successor arithmetic, and rewriting techniques, complex goals were broken down into simple, verifiable steps. 
+
+The proofs presented herein emphasize the importance of rigorous logical processes and their role in computer science education. Understanding these foundational principles equips us to reason effectively about computational operations and builds a solid framework for further exploration in formal methods and programming language theory. Overall, this document demonstrates not only the solutions but also the thought processes that underpin formal reasoning in computer science.
 
 \begin{thebibliography}{99}
-\bibitem[BLA]{bla} Author, \href{https://en.wikipedia.org/wiki/LaTeX}{Title}, Publisher, Year.
+
 \end{thebibliography}
 
 \end{document}
